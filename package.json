@@ -1,10 +1,13 @@
 {
   "name": "bestbuy-scraper",
   "version": "1.0.0",
-  "description": "Cypress script that automatically purchases items from the Best Buy website the second they drop",
+  "description": "Node script that automatically purchases items from the Best Buy website the second they drop",
   "main": "scrape.js",
   "scripts": {
-    "cypress": "./node_modules/.bin/cypress open",
+    "build": "node_modules/.bin/babel src --out-dir lib",
+    "clean": "rm -rf lib",
+    "purchase": "npm run clean && npm run build && node ./lib/purchaseItem.js",
+    "purchase:dev": "node_modules/.bin/nodemon --exec node_modules/.bin/babel-node ./src/purchaseItem.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,15 +21,19 @@
   },
   "homepage": "https://github.com/SuperCheese21/bestbuy-scraper#readme",
   "devDependencies": {
-    "cypress": "^8.0.0",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "@babel/node": "^7.14.7",
+    "@babel/preset-env": "^7.14.8",
     "eslint": "^7.31.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-cypress": "^2.11.3",
     "eslint-plugin-import": "^2.23.4",
+    "nodemon": "^2.0.12",
     "prettier": "^2.3.2"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "puppeteer": "^10.1.0"
   }
 }
