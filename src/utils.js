@@ -1,6 +1,9 @@
 import puppeteer from 'puppeteer';
 
 import {
+  changeZipButton,
+  locationInput,
+  updateLocationButton,
   addressResultItem,
   addressLineTwoButton,
   emailAddressInput,
@@ -44,10 +47,36 @@ export const clickOnElement = async ({ page, selector, waitForNavigation }) => {
   }
 };
 
+export const changeShippingZip = async ({ page, zip }) => {
+  const button = await page.$(changeZipButton);
+  const currentZip = await page.evaluate(
+    element => element.innerHTML.trim(),
+    button,
+  );
+  if (currentZip !== zip) {
+    await clickOnElement({
+      page,
+      selector: changeZipButton,
+    });
+    await page.type(locationInput, zip);
+    await clickOnElement({
+      page,
+      selector: updateLocationButton,
+    });
+    await page.waitForResponse(response =>
+      response.url().includes('/api/tcfb/model.json'),
+    );
+    await page.waitForTimeout(500);
+  }
+};
+
 export const populateAddressForm = async ({ page, selectors, data }) => {
   await page.type(selectors.firstNameInput, data.firstName);
   await page.type(selectors.lastNameInput, data.lastName);
-  await page.type(selectors.addressLineOneInput, data.addressLineOne);
+  await page.type(
+    selectors.addressLineOneInput,
+    `${data.addressLineOne}, ${data.city}, ${data.state}`,
+  );
   await page.waitForTimeout(500);
   await clickOnElement({
     page,

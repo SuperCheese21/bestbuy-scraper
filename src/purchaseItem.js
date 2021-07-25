@@ -2,6 +2,7 @@ import { hideBin } from 'yargs/helpers';
 import yargs from 'yargs/yargs';
 
 import {
+  changeShippingZip,
   clickOnElement,
   initBrowser,
   navigateToPage,
@@ -17,6 +18,7 @@ import {
   saveAsBillingCheckbox,
   continueButton,
   billingAddress as billingAddressSelectors,
+  placeOrderButton,
 } from '../data/selectors.json';
 import {
   shippingAddress,
@@ -27,7 +29,8 @@ import {
 
 (async () => {
   const { argv } = yargs(hideBin(process.argv));
-  const skuId = argv._[0];
+  const { _, test: testMode } = argv;
+  const skuId = _[0];
 
   const page = await initBrowser({ width: 1000, height: 660 });
 
@@ -39,17 +42,10 @@ import {
   await clickOnElement({
     page,
     selector: addToCartButton,
+    waitForNavigation: true,
   });
-  const res = await page.waitForResponse(
-    'https://www.bestbuy.com/cart/api/v1/addToCart',
-  );
-  const status = await res.status();
-  if (status !== 200) {
-    console.log(`Unable to add item to cart. Status: ${status}`);
-    return;
-  }
 
-  await navigateToPage({ page, url: 'https://www.bestbuy.com/cart' });
+  await changeShippingZip({ page, zip: shippingAddress.zip });
 
   await clickOnElement({
     page,
@@ -91,6 +87,14 @@ import {
       page,
       selectors: billingAddressSelectors,
       data: billingAddress,
+    });
+  }
+
+  if (!testMode) {
+    await clickOnElement({
+      page,
+      selector: placeOrderButton,
+      waitForNavigation: true,
     });
   }
 })();

@@ -1,5 +1,8 @@
 {
   "addToCartButton": "[data-button-state='ADD_TO_CART']",
+  "changeZipButton": "button.change-zipcode-link",
+  "locationInput": "#location",
+  "updateLocationButton": "#item-availability-links button",
   "checkoutButton": "button[data-track='Checkout - Top']",
   "continueAsGuestButton": "button.guest",
   "shippingAddress": {
@@ -23,5 +26,6 @@
     "lastNameInput": "#payment\\.billingAddress\\.lastName",
     "addressLineOneInput": "#payment\\.billingAddress\\.street",
     "addressLineTwoInput": "#payment\\.billingAddress\\.street2"
-  }
+  },
+  "placeOrderButton": "button[data-track='Place your Order - Contact Card']"
 }
