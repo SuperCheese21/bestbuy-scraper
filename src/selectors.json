@@ -1,0 +1,5 @@
+{
+  "addToCartButton": "[data-button-state='ADD_TO_CART']",
+  "checkoutButton": "button[data-track='Checkout - Top']",
+  "continueAsGuestButton": "button.guest"
+}
