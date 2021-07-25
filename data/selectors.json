@@ -1,5 +1,27 @@
 {
   "addToCartButton": "[data-button-state='ADD_TO_CART']",
   "checkoutButton": "button[data-track='Checkout - Top']",
-  "continueAsGuestButton": "button.guest"
+  "continueAsGuestButton": "button.guest",
+  "shippingAddress": {
+    "firstNameInput": "#consolidatedAddresses\\.ui_address_2\\.firstName",
+    "lastNameInput": "#consolidatedAddresses\\.ui_address_2\\.lastName",
+    "addressLineOneInput": "#consolidatedAddresses\\.ui_address_2\\.street",
+    "addressLineTwoInput": "#consolidatedAddresses\\.ui_address_2\\.street2"
+  },
+  "addressResultItem": "#street-a11y-autocomplete-list-item-0",
+  "addressLineTwoButton": ".address-form__showAddress2Link",
+  "saveAsBillingCheckbox": "#save-for-billing-address-ui_address_2",
+  "emailAddressInput": "#user\\.emailAddress",
+  "phoneNumberInput": "#user\\.phone",
+  "continueButton": ".button--continue button",
+  "cardNumberInput": "#optimized-cc-card-number",
+  "expirationMonthSelect": "select[name='expiration-month']",
+  "expirationYearSelect": "select[name='expiration-year']",
+  "securityCodeInput": "#credit-card-cvv",
+  "billingAddress": {
+    "firstNameInput": "#payment\\.billingAddress\\.firstName",
+    "lastNameInput": "#payment\\.billingAddress\\.lastName",
+    "addressLineOneInput": "#payment\\.billingAddress\\.street",
+    "addressLineTwoInput": "#payment\\.billingAddress\\.street2"
+  }
 }

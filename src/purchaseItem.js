@@ -1,12 +1,29 @@
 import { hideBin } from 'yargs/helpers';
 import yargs from 'yargs/yargs';
 
-import { clickOnElement, initBrowser, navigateToPage } from './utils';
+import {
+  clickOnElement,
+  initBrowser,
+  navigateToPage,
+  populateAddressForm,
+  populateContactInfoForm,
+  populateCreditCardForm,
+} from './utils';
 import {
   addToCartButton,
   checkoutButton,
   continueAsGuestButton,
+  shippingAddress as shippingAddressSelectors,
+  saveAsBillingCheckbox,
+  continueButton,
+  billingAddress as billingAddressSelectors,
 } from '../data/selectors.json';
+import {
+  shippingAddress,
+  contactInfo,
+  paymentInfo,
+  billingAddress,
+} from '../data/user_info.json';
 
 (async () => {
   const { argv } = yargs(hideBin(process.argv));
@@ -45,4 +62,35 @@ import {
     selector: continueAsGuestButton,
     waitForNavigation: true,
   });
+
+  await populateAddressForm({
+    page,
+    selectors: shippingAddressSelectors,
+    data: shippingAddress,
+  });
+
+  if (billingAddress) {
+    await clickOnElement({
+      page,
+      selector: saveAsBillingCheckbox,
+    });
+  }
+
+  await populateContactInfoForm({ page, data: contactInfo });
+
+  await clickOnElement({
+    page,
+    selector: continueButton,
+    waitForNavigation: true,
+  });
+
+  await populateCreditCardForm({ page, data: paymentInfo });
+
+  if (billingAddress) {
+    await populateAddressForm({
+      page,
+      selectors: billingAddressSelectors,
+      data: billingAddress,
+    });
+  }
 })();
